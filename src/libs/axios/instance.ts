@@ -1,5 +1,10 @@
 import environment from "@/config/environment";
+import { SessionExtended } from "@/types/Auth";
+
 import axios from "axios";
+import { getSession } from "next-auth/react";
+
+
 
 const headers = {
     "Content-Type": "application/json"
@@ -11,15 +16,12 @@ const instance = axios.create({
     timeout: 60 * 1000,
 });
 
-// Simple request interceptor without NextAuth.js
+
 instance.interceptors.request.use(
-    (request) => {
-        // Get token from localStorage if available
-        if (typeof window !== 'undefined') {
-            const token = localStorage.getItem('accessToken');
-            if (token) {
-                request.headers.Authorization = `Bearer ${token}`;
-            }
+    async(request) =>{
+        const session: SessionExtended | null = await getSession();
+        if(session && session.accessToken){
+            request.headers.Authorization = `Bearer ${session.accessToken}`;
         }
         return request;
     },
@@ -30,5 +32,6 @@ instance.interceptors.response.use(
     (response) => response,
     (error) => Promise.reject(error),
 );
+
 
 export default instance;
