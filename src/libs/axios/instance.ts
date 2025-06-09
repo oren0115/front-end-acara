@@ -1,16 +1,5 @@
 import environment from "@/config/environment";
-
 import axios from "axios";
-import { error } from "console";
-import { request } from "http";
-import { Session } from "next-auth";
-import { getSession } from "next-auth/react";
-
-
-interface CustomSession extends Session {
-    accessToken?: string;
-
-}
 
 const headers = {
     "Content-Type": "application/json"
@@ -22,12 +11,15 @@ const instance = axios.create({
     timeout: 60 * 1000,
 });
 
-
+// Simple request interceptor without NextAuth.js
 instance.interceptors.request.use(
-    async(request) =>{
-        const session: CustomSession | null = await getSession();
-        if(session && session.accessToken){
-            request.headers.Authorization = `Bearer ${session.accessToken}`;
+    (request) => {
+        // Get token from localStorage if available
+        if (typeof window !== 'undefined') {
+            const token = localStorage.getItem('accessToken');
+            if (token) {
+                request.headers.Authorization = `Bearer ${token}`;
+            }
         }
         return request;
     },
@@ -38,6 +30,5 @@ instance.interceptors.response.use(
     (response) => response,
     (error) => Promise.reject(error),
 );
-
 
 export default instance;
