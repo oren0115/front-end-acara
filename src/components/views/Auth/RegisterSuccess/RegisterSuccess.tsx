@@ -24,15 +24,6 @@ const RegisterSuccess = () => {
                 <p className="text-xl font-bold text-default-500">
                     Check your email for account activation
                 </p>
-                <div className="mt-4 text-sm text-default-400 max-w-md">
-                    <p>If you don't see the email:</p>
-                    <ul className="text-left mt-2 space-y-1">
-                        <li>• Check your spam/junk folder</li>
-                        <li>• Wait a few minutes for delivery</li>
-                        <li>• Verify your email address is correct</li>
-                        <li>• Contact support if the issue persists</li>
-                    </ul>
-                </div>
                 <Button className="mt-4 w-fit" variant="bordered" color="danger" onClick={()=> router.push("/")}>
                     Back to home
                 </Button>
