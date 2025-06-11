@@ -28,7 +28,6 @@ export default function App({ Component, pageProps: {session, ...pageProps} }: A
       <NextUIProvider>
       <main className={cn(
         inter.className,
-        "flex min-h-screen min-wfull flex-col items-center justify-center gap-10 py-10 lg:py"
       )}>
       <Component {...pageProps} />
       </main>

@@ -26,28 +26,23 @@ export async function getServerSideProps(context: {query: {code: string}}) {
             return {
                 props: {
                     status: "success",
-
                 },
             };
         }else{
             return {
                 props: {
                     status: "failed",
-
                 },
             };
         }
     } catch (error) {
+        console.error("Activation error:", error);
         return {
             props: {
-                status: "success",
-
+                status: "failed",
             },
         };
     }
-
-
-
 }
 
 
